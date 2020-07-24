@@ -1,3 +1,4 @@
+//Runtime O(N) where N is the length of moves
 class Solution {
     public String tictactoe(int[][] moves) {
         int[][] board = new int[3][3];
