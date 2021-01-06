@@ -1,4 +1,6 @@
 //Runtime O(N^2) where N is the length of nums
+//Sorts array to make skipping duplicates easier then iterates through
+//the sorted array while running 2sum (using 2 pointers) on the rest of the array
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
