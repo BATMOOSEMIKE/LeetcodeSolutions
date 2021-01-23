@@ -1,21 +1,28 @@
-//My first medium question!!
-import java.lang.Math;
-
 class Solution {
     public void rotate(int[][] matrix) {
-        int[][] newmatrix = new int[matrix.length][matrix.length];
+        int n = matrix.length;
+        int layers = (n+1)/2;
 
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix.length; j++){
-                newmatrix[j][Math.abs(matrix.length-i-1)] = matrix[i][j];
+        //loop through each layer
+        for(int i = 0; i < layers; i++){
+            int layerSize = n-i*2;
+            int topCoord = i;
+            int leftCoord = i;
+            int bottomCoord = i + layerSize - 1;
+            int rightCoord = i + layerSize - 1;
+            //loop through each element of each layer
+            for(int j = 0; j < layerSize-1; j++){
+                //store top left element as a temporary variable
+                int temp = matrix[i][i+j];
+                //top "left" = "bottom" left
+                matrix[i][i+j] = matrix[i+layerSize-1-j][i];
+                //"bottom" left = bottom "right"
+                matrix[i+layerSize-1-j][i] = matrix[i+layerSize-1][i+layerSize-1-j];
+                //bottom "right" = "top" right
+                matrix[i+layerSize-1][i+layerSize-1-j] = matrix[i+j][i+layerSize-1];
+                //"top" right = top "left"
+                matrix[i+j][i+layerSize-1] = temp;
             }
         }
-
-        for(int i = 0; i < newmatrix.length; i++){
-          for(int j = 0; j < newmatrix.length; j++){
-            matrix[i][j] = newmatrix[i][j];
-          }
-        }
-
     }
 }
