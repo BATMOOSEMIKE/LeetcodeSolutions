@@ -1,54 +1,51 @@
 class Solution {
 
+    List<String> allCombos = new ArrayList<String>();
 
-    public List<String> letterCombinations(String digits) {
-        List<String> letterCombos = new ArrayList<String>();
-
-        for(int i = 0; i < digits.length(); i++){
-            List<String> tempCombos = new ArrayList<String>();
-            String[] curPossibilities = getChars(digits.charAt(i));
-
-            if(letterCombos.size() == 0){
-                for(int j = 0; j < curPossibilities.length; j++){
-                    tempCombos.add(curPossibilities[j]);
-                }
-            }
-            else {
-                for(String s: letterCombos){
-                    for(int j = 0; j < curPossibilities.length; j++){
-                        tempCombos.add(s + curPossibilities[j]);
-                    }
-                }
-            }
-
-            letterCombos = tempCombos;
-        }
-
-        return letterCombos;
-    }
-
-    public String[] getChars(char c){
+    public Character[] getChars(char c){
         switch (c){
             case '2':
-                return new String[]{"a", "b", "c"};
+                return new Character[]{'a', 'b', 'c'};
             case '3':
-                return new String[]{"d", "e", "f"};
+                return new Character[]{'d', 'e', 'f'};
             case '4':
-                return new String[]{"g", "h", "i"};
+                return new Character[]{'g', 'h', 'i'};
             case '5':
-                return new String[]{"j", "k", "l"};
+                return new Character[]{'j', 'k', 'l'};
             case '6':
-                return new String[]{"m", "n", "o"};
+                return new Character[]{'m', 'n', 'o'};
             case '7':
-                return new String[]{"p", "q", "r", "s"};
+                return new Character[]{'p', 'q', 'r', 's'};
             case '8':
-                return new String[]{"t", "u", "v"};
+                return new Character[]{'t', 'u', 'v'};
             case '9':
-                return new String[]{"w", "x", "y", "z"};
+                return new Character[]{'w', 'x', 'y', 'z'};
             default:
-                return new String[]{"69"};
+                return new Character[]{};
         }
-
     }
 
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() == 0){
+            return allCombos;
+        }
+        processNextDigit(digits, 0, new StringBuilder());
+        return allCombos;
+    }
+
+    public void processNextDigit(String digits, int index, StringBuilder sb){
+        if(index >= digits.length()){
+            allCombos.add(sb.toString());
+            return;
+        }
+
+        char digit = digits.charAt(index);
+        Character[] nextChars = getChars(digit);
+
+        for(Character c: nextChars){
+            sb.append(c);
+            processNextDigit(digits, index+1, sb);
+            sb.setLength(sb.length() - 1);
+        }
+    }
 }
